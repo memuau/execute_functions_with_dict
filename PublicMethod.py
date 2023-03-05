@@ -53,7 +53,6 @@ class PublicMethod:
             for name, param in command.items():
                 if (type_:= self.annotations.get(name)) is not None:
                     try:
-                        print(type_)
                         converted_command[name] = type_(param)
                     except ValueError as ex:
                         is_valid = False

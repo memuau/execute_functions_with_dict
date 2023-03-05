@@ -36,7 +36,7 @@ class ExampleClass:
         Args:
             a (int): Integer for operations
             b (str): Integer for operations
-            c (str, optional): Optional parameter. Defaults to "default_value.
+            c (str, optional): Optional parameter. Defaults to "default_value".
         """
         print(a, b, c)
         return "successfully executed complex_public_method"

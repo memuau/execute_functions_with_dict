@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BigClassExample web interface</title>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
-    <script src="{{ url_for('static',filename='script.js') }}"> </script>
+    <title>ExampleClass web interface</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/style.css') }}"
+    />
+    <script src="{{ url_for('static',filename='script.js') }}"></script>
   </head>
   <body>
-    <h1>Last executed command</h1>
-    <div>
-      {{ last_command }}
+    <div class="sidenav" id="nav">
+      <h1>Select a command</h1>
+      {% for method_name, method_data in methods.items() -%}
+      <a onclick="updateContent({{ method_data.get_dict_for_web() }})">{{ method_name }}</a>
+      {% endfor %}
     </div>
-    <h1>Execute</h1>
-    <div class="dropdown">
-      <button class="dropbtn">Choose a command</button>
-      <div class="dropdown-content">
-        {% for method_name, method_data in methods.items() -%}
-        <a onclick="updateContent({{ method_data.get_dict_for_web() }})">{{ method_name }}</a>
-        {% endfor %}
+    <div class="content">
+      <div id="methodData">
+        <script>
+          document.getElementById("nav").children[1].click();
+        </script>
       </div>
-    </div>
-    <div id="content">
+      {% if last_command != "" %}
+      <h2>Last executed command</h1>
+      <p style="font-family: monospace">{{ last_command }}</p>
+      {% endif %}
     </div>
   </body>
 </html>
