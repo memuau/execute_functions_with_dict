@@ -7,6 +7,8 @@ class PublicMethod:
     This class accepts a method and provides a handy interface to execute it and validate command before the execution.
     Commands looks like: {"function": "method_name", "parameter1": "some string", "parameter2": 5 ...}
     """
+    # Internal class representing validated (also with types checked and converted) command
+    ValidatedCommand = namedtuple("ValidatedCommand", ["is_valid", "converted", "errors"])
     def __init__(self, method: Callable):
         self.name = method.__name__
         self.docs = method.__doc__ or "No documentation provided."
@@ -41,8 +43,7 @@ class PublicMethod:
     def get_dict_for_web(self) -> dict:
         return {'name': self.name, 'docs': self.docs.replace('\n', '<br>'), 'params': self.params}
 
-    def validate_command(self, command: dict, with_types: bool = False) -> tuple[bool, dict, str]:
-        ValidatedCommand = namedtuple("ValidatedCommand", ["is_valid", "converted", "errors"])
+    def validate_command(self, command: dict, with_types: bool = False) -> ValidatedCommand:
         is_valid: bool = True
         errors: str = ""
         converted_command = {**command}
@@ -57,4 +58,4 @@ class PublicMethod:
                     except ValueError as ex:
                         is_valid = False
                         errors += f"Error for parameter {name}: " + repr(ex) + "\n"
-        return ValidatedCommand(is_valid, converted_command, errors)
+        return self.ValidatedCommand(is_valid, converted_command, errors)
