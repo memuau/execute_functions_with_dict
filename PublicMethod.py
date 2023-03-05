@@ -23,7 +23,7 @@ class PublicMethod:
     def __repr__(self):
         return f"Method: {self.name},\n parameters: {self.params},\n docs: {self.docs}\n"
 
-    def _get_parameters_data(self):
+    def _get_parameters_data(self) -> dict:
         full_arg_spec = inspect.getfullargspec(self.method)
         output_dict = {}
         try:
@@ -38,7 +38,7 @@ class PublicMethod:
             output_dict["optional"] = list() ## TODO: This should be an empty dict
         return output_dict
 
-    def get_dict_for_web(self):
+    def get_dict_for_web(self) -> dict:
         return {'name': self.name, 'docs': self.docs.replace('\n', '<br>'), 'params': self.params}
 
     def validate_command(self, command: dict, with_types: bool = False) -> tuple[bool, dict, str]:

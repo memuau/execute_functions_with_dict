@@ -3,10 +3,13 @@ import json
 from shutil import move
 
 class FolderQueue:
+    """
+    This class is used for monitoring a folder with json command queue.
+    """
     def __init__(self, path_to_folder):
-        self.new = path_to_folder + "/new/"
-        self.processed = path_to_folder + "/processed/"
-        self.previous_command_name = ""
+        self.new: str = path_to_folder + "/new/"
+        self.processed: str = path_to_folder + "/processed/"
+        self.previous_command_name = str()
 
     def __call__(self) -> dict:
         if filename := self.previous_command_name:

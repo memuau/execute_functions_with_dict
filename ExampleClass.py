@@ -2,19 +2,19 @@ from PublicMethod import PublicMethod
 
 class ExampleClass:
     def __init__(self) -> None:
-        self.some_value = 'instance attribute'
+        self.some_value: str = 'instance attribute'
         self.public_methods = self._get_public_methods()
 
-    def _get_public_methods(self):
+    def _get_public_methods(self) -> dict[str, PublicMethod]:
         public_methods: dict[str, PublicMethod] = {func: PublicMethod(getattr(self, func)) for func in dir(self) if callable(getattr(self, func)) and not func.startswith("_") and not func in ("execute_command_old", "execute_command", "get_public_methods")}
         return public_methods
 
     @classmethod
-    def get_public_methods(cls):
+    def get_public_methods(cls) -> dict[str, PublicMethod]:
         public_methods: dict[str, PublicMethod] = {func: PublicMethod(getattr(cls, func)) for func in dir(cls) if callable(getattr(cls, func)) and not func.startswith("_") and not func in ("execute_command_old", "execute_command", "get_public_methods")}
         return public_methods
 
-    def execute_command(self, command: dict):
+    def execute_command(self, command: dict) -> dict:
         try:
             if command.get("function") is None:
                 raise ValueError("Command needs to have 'function' key")
@@ -24,13 +24,13 @@ class ExampleClass:
             return {"status": 0, "error": "", "result": result if result is not None else ""}
         except NotImplementedError as ex:
             print(repr(ex))
-            return [-4000, "not implemented" , repr(ex)]
+            return {"status": -4000, "error": "Not implemented" , "result": repr(ex), "function": method}
         except Exception as ex:
             # Write exception to DB etc.
             print(repr(ex))
-            return [-1, "something went wrong", repr(ex)]
+            return {"status": -1, "error": "Something went wrong" , "result": repr(ex), "function": method}
 
-    def complex_method(self, a: int, b: str, c: str = "default_value"):
+    def complex_method(self, a: int, b: str, c: str = "default_value") -> str:
         """ Documentation of a public method. This method does something cool.
 
         Args:
@@ -43,7 +43,7 @@ class ExampleClass:
         # Many lines of complicated code, which may throw some exceptions
         # Note that try except block is not used, because the exceptions are catched in `PublicMethod.execute()` method
 
-    def simple_method(self, x: int, y):
+    def simple_method(self, x: int, y) -> str:
         # No docstring for this function. Also, no optional parameters and not fully typed.
         print(x, y, self.some_value)
         return "successfully executed simple_public_method"

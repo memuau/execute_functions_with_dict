@@ -7,7 +7,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.jinja_env.globals.update(list=list)
 methods = ExampleClass.get_public_methods()
-last_command = ""
+last_command: str = ""
 
 
 @app.route("/")
