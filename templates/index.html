@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BigClassExample web interface</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <script src="{{ url_for('static',filename='script.js') }}"> </script>
+  </head>
+  <body>
+    <h1>Last executed command</h1>
+    <div>
+      {{ last_command }}
+    </div>
+    <h1>Execute</h1>
+    <div class="dropdown">
+      <button class="dropbtn">Choose a command</button>
+      <div class="dropdown-content">
+        {% for method_name, method_data in methods.items() -%}
+        <a onclick="updateContent({{ method_data.get_dict_for_web() }})">{{ method_name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div id="content">
+    </div>
+  </body>
+</html>
