@@ -30,7 +30,7 @@ class ExampleClass:
             print(repr(ex))
             return [-1, "something went wrong", repr(ex)]
 
-    def complex_public_method(self, a: int, b: str, c: str = "default_value"):
+    def complex_method(self, a: int, b: str, c: str = "default_value"):
         """ Documentation of a public method. This method does something cool.
 
         Args:
@@ -43,7 +43,7 @@ class ExampleClass:
         # Many lines of complicated code, which may throw some exceptions
         # Note that try except block is not used, because the exceptions are catched in `PublicMethod.execute()` method
 
-    def simple_public_method(self, x: int, y):
+    def simple_method(self, x: int, y):
         # No docstring for this function. Also, no optional parameters and not fully typed.
         print(x, y, self.some_value)
         return "successfully executed simple_public_method"
