@@ -11,7 +11,7 @@ class FolderQueue:
     def __call__(self) -> dict:
         if filename := self.previous_command_name:
             move(self.new + filename, self.processed + filename)
-        new_commands = os.listdir(self.new)
+        new_commands = [filename for filename in os.listdir(self.new) if filename.endswith(".json")]
         if not new_commands:
             self.previous_command_name = ""
             yield dict()
