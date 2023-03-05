@@ -35,7 +35,7 @@ class PublicMethod:
             output_dict["optional"] = {arg_name: self.annotations.get(arg_name, any).__name__ for arg_name in full_arg_spec.args[-len(full_arg_spec.defaults):]}
         else:
             output_dict["mandatory"] = {arg_name: self.annotations.get(arg_name, any).__name__ for arg_name in full_arg_spec.args}
-            output_dict["optional"] = list()
+            output_dict["optional"] = list() ## TODO: This should be an empty dict
         return output_dict
 
     def get_dict_for_web(self):
