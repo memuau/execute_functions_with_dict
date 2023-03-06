@@ -18,7 +18,7 @@ def home():
 def executeCommand():
     command = methods[request.form["function"]].validate_command(request.form, with_types=True)
     if command.is_valid:
-        timestamp = datetime.now().strftime("%Y%m%d-%H:%M:%S")
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
         with open(f"json_queue/new/{timestamp}.json", "w") as f:
             json.dump(command.converted, f)
         global last_command # Only for prototyping
